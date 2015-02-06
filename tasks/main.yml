@@ -1,0 +1,4 @@
+---
+# tasks file for ansible-python
+- name: Prepare python virtualenv
+  pacman: name=python2-virtualenv state=present
