@@ -1,4 +1,30 @@
 ---
 # tasks file for ansible-python
-- name: Prepare python virtualenv
-  pacman: name=python2-virtualenv state=present
+#- name: Prepare python virtualenv
+  #pacman: name=python2-virtualenv state=present
+- name: Archlinux-specific symlink for python2
+  sudo: true
+  file: src=/usr/bin/python2 dest=/usr/bin/python state=link
+
+- name: Archlinux-specific symlink for pip2
+  sudo: true
+  file: src=/usr/bin/pip2 dest=/usr/bin/pip state=link
+  
+- name: Install virtualenv and virtualenvwrapper with pip
+  sudo: true
+  pip: name=virtualenvwrapper state=present
+
+- name: Install autoenv, a generic env tool 
+  sudo: true
+  pip: name=autoenv state=present
+
+- name: Add python profile globally
+  sudo: true
+  template: src=../templates/python.j2 dest=/etc/skel/.bash_profile.d/python
+
+- name: Add python profile for deploy user
+  sudo: true
+  template: src=../templates/python.j2 dest=/home/{{ deploy_user }}/.bash_profile.d/python owner={{ deploy_user }} group={{ deploy_user }}
+
+- name: Add python profile for existing user
+  template: src=../templates/python.j2 dest=~/.bash_profile.d/python 
