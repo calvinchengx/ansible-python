@@ -1,7 +1,4 @@
 ---
-# tasks file for ansible-python
-#- name: Prepare python virtualenv
-  #pacman: name=python2-virtualenv state=present
 - name: Archlinux-specific symlink for python2
   sudo: true
   file: src=/usr/bin/python2 dest=/usr/bin/python state=link
@@ -24,7 +21,7 @@
 
 - name: Add python profile for deploy user
   sudo: true
-  template: src=../templates/python.j2 dest=/home/{{ deploy_user }}/.bash_profile.d/python owner={{ deploy_user }} group={{ deploy_user }}
+  template: src=../templates/python.j2 dest=/home/{{ sudo_user }}/.bash_profile.d/python owner={{ sudo_user }} group={{ sudo_user }}
 
 - name: Add python profile for existing user
   template: src=../templates/python.j2 dest=~/.bash_profile.d/python 
