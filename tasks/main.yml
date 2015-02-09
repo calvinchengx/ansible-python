@@ -19,7 +19,7 @@
   sudo: true
   template: src=../templates/python.j2 dest=/etc/skel/.bash_profile.d/python
 
-- name: Add python profile for deploy user
+- name: Add python profile for sudo user
   sudo: true
   template: src=../templates/python.j2 dest=/home/{{ sudo_user }}/.bash_profile.d/python owner={{ sudo_user }} group={{ sudo_user }}
 
